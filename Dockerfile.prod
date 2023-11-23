@@ -5,6 +5,10 @@ FROM mysql:latest
 ENV MYSQL_DATABASE=mysql-ld
 ENV MYSQL_ROOT_PASSWORD=asd@1234
 
+RUN apt-get update && \
+    apt-get install -y unzip
+
+
 # When the container starts, create a database with the specified name
 COPY mysqlsampledatabase.sql /docker-entrypoint-initdb.d/
 COPY my.cnf /etc/mysql/conf.d/

@@ -10,10 +10,13 @@ docker run my-mysql-container
 
 docker network create airbyte-mysql-network
 
-docker network connect airbyte_airbyte_internal my-mysql-container
+docker network connect airbyte-mysql-network my-mysql-container
 
-docker run --name my-mysql-container --network airbyte_airbyte_internal -p 3306:3306 -d my-mysql-img
+docker run --name my-mysql-container --network airbyte-mysql-network -p 3306:3306 -d my-mysql-img
 
+docker network inspect airbyte-mysql-network
+
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' my-mysql-container
 
 
 
