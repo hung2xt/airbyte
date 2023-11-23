@@ -6,4 +6,16 @@ mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rf
 
 gcloud auth application-default login
 
+docker run my-mysql-container
+
+docker network create airbyte-mysql-network
+
+docker network connect airbyte_airbyte_internal my-mysql-container
+
+docker run --name my-mysql-container --network airbyte_airbyte_internal -p 3306:3306 -d my-mysql-img
+
+
+
+
+
 

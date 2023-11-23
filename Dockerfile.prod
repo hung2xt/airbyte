@@ -6,7 +6,8 @@ ENV MYSQL_DATABASE=mysql-ld
 ENV MYSQL_ROOT_PASSWORD=asd@1234
 
 # When the container starts, create a database with the specified name
-# COPY ./sql-scripts/ /docker-entrypoint-initdb.d/
+COPY mysqlsampledatabase.sql /docker-entrypoint-initdb.d/
+COPY my.cnf /etc/mysql/conf.d/
 
 # Expose the port MySQL is reachable on
 EXPOSE 3306
