@@ -1,0 +1,9 @@
+
+docker build -t my-mysql-img -f Dockerfile.prod .
+docker run --name my-mysql-container -p 3306:3306 -d my-mysql-img 
+
+mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam
+
+gcloud auth application-default login
+
+
