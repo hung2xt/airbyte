@@ -58,7 +58,7 @@ try:
                 event = {"data": row["values"]}
                 transformed_data = transform_data(event['data'])
                 # Define BigQuery table ID
-                table_id = "sawyer-work-1804.SCD.classicmodel_customers"
+                table_id = "classicmodel_customers"
                 insert_into_bigquery(transformed_data, table_id)
                 print(transformed_data)
 finally:
