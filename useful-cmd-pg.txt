@@ -1,0 +1,80 @@
+The PostgreSQL command line offers a variety of tools and utilities to interact with and manage PostgreSQL databases. Here are some of the most commonly used PostgreSQL command-line tools:
+
+1. **`psql`**: The primary interactive command-line utility for PostgreSQL. It allows you to interact with the server and execute SQL queries.
+
+   - Connect to a database: `psql -d dbname -U username -h host`
+   - List all databases: `\l` or `\list`
+   - Connect to a specific database: `\c dbname`
+   - List all tables in the current database: `\dt`
+   - Describe a table: `\d tablename`
+   - Execute a SQL query: `SELECT * FROM tablename;`
+   - Exit `psql`: `\q`
+
+2. **`createdb`**: A utility for creating a PostgreSQL database.
+
+   - Create a database: `createdb -U username dbname`
+
+3. **`dropdb`**: A utility to delete a database.
+
+   - Drop a database: `dropdb -U username dbname`
+
+4. **`createuser`**: A utility to create a new PostgreSQL user.
+
+   - Create a user: `createuser -U username newusername`
+
+5. **`dropuser`**: A utility to remove a PostgreSQL user.
+
+   - Drop a user: `dropuser -U username username_to_drop`
+
+6. **`pg_dump`**: A utility to back up a PostgreSQL database.
+
+   - Create a backup: `pg_dump -U username dbname > backupfile.sql`
+
+7. **`pg_restore`**: A utility to restore a PostgreSQL database from a backup.
+
+   - Restore a backup: `pg_restore -U username -d dbname < backupfile.sql`
+
+8. **`pg_config`**: Displays information about the PostgreSQL installation.
+
+9. **`pg_ctl`**: A utility to initialize, start, stop, or control a PostgreSQL server.
+
+   - Start the server: `pg_ctl -D /path/to/datadir start`
+   - Stop the server: `pg_ctl -D /path/to/datadir stop`
+
+These commands and utilities are essential for basic PostgreSQL database administration and interaction. The usage might vary slightly based on your operating system and PostgreSQL version.
+
+
+CREATE TABLE bike_rides (
+    ride_id VARCHAR(255) PRIMARY KEY,
+    rideable_type VARCHAR(255),
+    started_at TIMESTAMP,
+    ended_at TIMESTAMP,
+    start_station_name VARCHAR(255),
+    start_station_id VARCHAR(255),
+    end_station_name VARCHAR(255),
+    end_station_id VARCHAR(255),
+    start_lat FLOAT,
+    start_lng FLOAT,
+    end_lat FLOAT,
+    end_lng FLOAT,
+    member_casual VARCHAR(50)
+);
+docker cp 202104-divvy-tripdata.csv my-pg-container:/202104-divvy-tripdata.csv
+docker cp 202105-divvy-tripdata.csv my-pg-container:/202104-divvy-tripdata.csv
+docker cp 202106-divvy-tripdata.csv my-pg-container:/202104-divvy-tripdata.csv
+
+COPY bike_rides FROM '/202104-divvy-tripdata.csv' DELIMITER ',' CSV HEADER;
+COPY bike_rides FROM '/202105-divvy-tripdata.csv' DELIMITER ',' CSV HEADER;
+COPY bike_rides FROM '/202106-divvy-tripdata.csv' DELIMITER ',' CSV HEADER;
+
+CREATE INDEX casual ON bike_rides(member_casual) WHERE member_casual = 'casual';
+CREATE INDEX casual ON bike_rides(member_casual) WHERE member_casual = 'member';
+
+EXPLAIN SELECT * FROM bike_rides WHERE member_casual='casual'; -- pre-optimization: 11895.38; post-optimization: 10564.78
+EXPLAIN SELECT * FROM bike_rides WHERE member_casual='member'; -- pre-optimization: 11895.38
+
+
+
+
+
+
