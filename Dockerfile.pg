@@ -1,0 +1,15 @@
+# Use the official PostgreSQL image
+FROM postgres:latest
+
+# Set environment variables
+ENV POSTGRES_DB=sandbox-img
+ENV POSTGRES_USER=cat02
+ENV POSTGRES_PASSWORD=asd@1234
+
+# Expose the PostgreSQL port
+EXPOSE 5432
+
+# Set the default command to run when starting the container
+CMD ["postgres"]
+
+
