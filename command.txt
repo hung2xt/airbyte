@@ -18,8 +18,8 @@ docker run --name my-mysql-container -v custom-my.cnf:/etc/mysql/conf.d/custom-m
 
 
 
-CREATE USER 'airbyte_user'@'localhost' IDENTIFIED BY 'asd@1234';
-CREATE USER 'airbyte_user'@'%' IDENTIFIED BY 'asd@1234';
+CREATE USER 'airbyte_user'@'localhost' IDENTIFIED BY '';
+CREATE USER 'airbyte_user'@'%' IDENTIFIED BY '';
 GRANT ALL ON *.* TO 'airbyte_user'@'localhost';
 GRANT ALL ON *.* TO 'airbyte_user'@'%';
 
