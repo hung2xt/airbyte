@@ -14,11 +14,30 @@ docker network connect airbyte-mysql-network my-mysql-container
 
 docker run --name my-mysql-container --network airbyte-mysql-network -p 3306:3306 -d my-mysql-img
 
+docker run --name my-mysql-container -v custom-my.cnf:/etc/mysql/conf.d/custom-my.cnf:ro -p 3306:3306 -d my-mysql-img --bind-address=0.0.0.0
+
+
+
+CREATE USER 'airbyte_user'@'localhost' IDENTIFIED BY 'asd@1234';
+CREATE USER 'airbyte_user'@'%' IDENTIFIED BY 'asd@1234';
+GRANT ALL ON *.* TO 'airbyte_user'@'localhost';
+GRANT ALL ON *.* TO 'airbyte_user'@'%';
+
+FLUSH PRIVILEGES;
+
 docker network inspect airbyte-mysql-network
 
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' my-mysql-container
 
+curl ifconfig.me
 
+helm install --values values.yaml %release_name% airbyte/airbyte
+
+kubectl create namespace airbyte
+
+helm install airbyte airbyte/airbyte --namespace airbyte 
+
+kubectl --namespace airbyte port-forward $POD_NAME 8080:$CONTAINER_PORT
 
 
 
