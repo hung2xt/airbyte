@@ -31,6 +31,8 @@ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' my-
 
 curl ifconfig.me
 
+gcloud container clusters get-credentials cluster-1 --zone us-central1-a --project sawyer-work-1804
+
 helm install --values values.yaml %release_name% airbyte/airbyte
 
 kubectl create namespace airbyte
